@@ -1,9 +1,6 @@
 package com.devsuperior.dscatalog.entities;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import jakarta.persistence.*;
-import org.springframework.boot.autoconfigure.web.WebProperties;
-
 import java.io.Serializable;
 import java.util.Objects;
 
