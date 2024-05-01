@@ -1,10 +1,18 @@
 package com.devsuperior.dscatalog.entities;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import jakarta.persistence.*;
+import org.springframework.boot.autoconfigure.web.WebProperties;
+
 import java.io.Serializable;
 import java.util.Objects;
 
+@Entity
+@Table(name = "tb_category")
 public class Category implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
 
