@@ -18,7 +18,7 @@ import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -40,6 +40,7 @@ public class ProductResourcesTest {
     private PageImpl<ProductDTO> page;
     private long existingId;
     private long nonExistingId;
+    private long dependentId;
     private String jsonBody;
 
     @BeforeEach
@@ -49,13 +50,20 @@ public class ProductResourcesTest {
         page = new PageImpl<>(List.of(productDTO));
         existingId = 1L;
         nonExistingId = 100L;
+        dependentId = 3L;
         jsonBody = objectMapper.writeValueAsString(Factory.createProductDTO());
 
         when(productService.findAllPaged(any())).thenReturn(page);
+
         when(productService.findById(existingId)).thenReturn(productDTO);
         when(productService.findById(nonExistingId)).thenThrow(ResourceNotFoundException.class);
+
         when(productService.update(eq(existingId), any())).thenReturn(productDTO);
         when(productService.update(eq(nonExistingId), any())).thenThrow(ResourceNotFoundException.class);
+
+        doNothing().when(productService).delete(existingId);
+        doThrow(ResourceNotFoundException.class).when(productService).delete(nonExistingId);
+        doThrow(ResourceNotFoundException.class).when(productService).delete(dependentId);
     }
 
     @Test
