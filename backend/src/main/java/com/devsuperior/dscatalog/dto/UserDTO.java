@@ -1,9 +1,7 @@
 package com.devsuperior.dscatalog.dto;
 
-import com.devsuperior.dscatalog.entities.Role;
 import com.devsuperior.dscatalog.entities.User;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 
 import java.util.HashSet;
 import java.util.Set;
